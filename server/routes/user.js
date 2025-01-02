@@ -39,8 +39,6 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { email, username, password, DOB, gender } = req.body;
-  console.log(req.body)
-
   if (!email || !username || !password || !DOB || !gender)
     return res.json({ success: false, message: "All fields are required" });
   try {
