@@ -1,4 +1,4 @@
-.card {
+/* .card {
     background-color: var(--card_pri_bg);
 }
 
@@ -7,7 +7,7 @@
 
     cursor: pointer;
     transition: all 0.2s ease-in;
-    /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
 }
 
 .play_btn {
@@ -17,4 +17,47 @@
 .card:hover .play_btn {
     display: block !important;
     transition: all .3s ease-in;
+} */
+
+.card {
+    background-color: var(--card_pri_bg);
+    border-radius: 50%;
+    /* Makes the card circular */
+    overflow: hidden;
+    /* Ensures content stays within the circular shape */
+    text-align: center;
+    /* Centers text */
+}
+
+.card img {
+    border-radius: 50%;
+    /* Makes the image circular */
+    object-fit: cover;
+    /* Ensures the image fits well within the card */
+}
+
+.card:hover {
+    /* background: var(--card_bg); */
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+    /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); */
+}
+
+.card h3 {
+    color: red;
+    /* Changes text color to red */
+}
+
+.card p {
+    color: red;
+    /* Changes subtitle text color to red */
+}
+
+.play_btn {
+    display: none !important;
+}
+
+.card:hover .play_btn {
+    display: block !important;
+    transition: all 0.3s ease-in;
 }

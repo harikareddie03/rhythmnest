@@ -1,14 +1,106 @@
+/* .your_library {
+  height: 18rem;
+  overflow-y: scroll;
+}
+
+ .your_library::-webkit-scrollbar{
+    width: 12px;
+    background-color: #ffffff75;
+} 
+.your_library::-webkit-scrollbar {
+  appearance: none;
+  width: 12px;
+  background-color: black;
+} */
+/* Sidebar Container */
+.sidebar {
+  background-color: white;
+  /* Set the background to white */
+  color: red;
+  /* Change all text to red */
+  height: 100vh;
+  /* Full-height sidebar */
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Links and Icons */
+.sidebar a {
+  color: red;
+  /* Ensure links are red */
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+  /* Add underline on hover for accessibility */
+}
+
+.nav {
+  background-color: #ffffff;
+  /* Ensure navbar has a matching white background */
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.nav span {
+  color: red;
+  /* Text color for nav labels */
+}
+
+.nav svg {
+  color: red;
+  /* Set icons to red */
+}
+
+/* Buttons */
+button {
+  color: red;
+  /* Text color inside buttons */
+  border: 1px solid red;
+  /* Add a red border for better contrast */
+}
+
+button:hover {
+  background-color: #ffe6e6;
+  /* Light red background on hover */
+}
+
+/* Playlist Items */
 .your_library {
   height: 18rem;
   overflow-y: scroll;
 }
 
-/* .your_library::-webkit-scrollbar{
-    width: 12px;
-    background-color: #ffffff75;
-} */
+.your_library h3,
+.your_library p {
+  color: red;
+  /* Ensure playlist titles and descriptions are red */
+}
+
+/* Scrollbar */
 .your_library::-webkit-scrollbar {
-  appearance: none;
   width: 12px;
-  background-color: black;
+  background-color: white;
+  /* Match background */
+}
+
+.your_library::-webkit-scrollbar-thumb {
+  background-color: red;
+  /* Red thumb for the scrollbar */
+  border-radius: 6px;
+}
+
+.your_library::-webkit-scrollbar-thumb:hover {
+  background-color: #ff6666;
+  /* Slightly lighter red on hover */
+}
+
+/* Footer Links */
+.sidebar .mt-4 a {
+  color: red;
+}
+
+.sidebar .mt-4 a:hover {
+  text-decoration: underline;
 }

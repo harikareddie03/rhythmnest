@@ -53,7 +53,7 @@ const Sidebar = () => {
           </Link>
           <Link
             to={"/"}
-            className="rounded-full mt-4 px-3   py-1 bg-white/10 text-white text-sm"
+            className="rounded-full mt-4 px-3   py-1 bg-white/10 text-red text-sm"
           >
             Artists
           </Link>
@@ -81,28 +81,28 @@ const Sidebar = () => {
             );
           })}
         </div>
-        {/* <div className="your_library">
-                    <div className="leading-8 mt-2 tertiary_bg rounded-lg py-6 px-4">
-                        <p className="font-bold">Create your first playlist</p>
-                        <p className="font-semibold">
-                            It's easy, we'll help you
-                        </p>
-                        <button className="rounded-full text-black mt-4 px-4 py-0 bg-white font-semibold">
-                            Create playlist
-                        </button>
-                    </div>
-                    <div className="leading-8 mt-4 tertiary_bg rounded-lg py-6 px-4">
-                        <p className="font-bold">
-                            Let's find some podcasts to follow
-                        </p>
-                        <p className="font-semibold">
-                            We'll keep you updated on new episodes
-                        </p>
-                        <button className="rounded-full text-black mt-4 px-4 py-0 bg-white font-semibold">
-                            Browse Podcast
-                        </button>
-                    </div>
-                </div> */}
+        <div className="your_library">
+          <div className="leading-8 mt-2 white_bg rounded-lg py-6 px-4">
+            <p className="font-bold">Create your first playlist</p>
+            <p className="font-semibold">
+              It's easy, we'll help you
+            </p>
+            <button className="rounded-full text-white mt-4 px-4 py-0 bg-red-500 font-semibold">
+              Create playlist
+            </button>
+          </div>
+          {/* <div className="leading-8 mt-4 tertiary_bg rounded-lg py-6 px-4">
+            <p className="font-bold">
+              Let's find some podcasts to follow
+            </p>
+            <p className="font-semibold">
+              We'll keep you updated on new episodes
+            </p>
+            <button className="rounded-full text-black mt-4 px-4 py-0 bg-white font-semibold">
+              Browse Podcast
+            </button>
+          </div> */}
+        </div>
       </div>
       <div className="mt-4 px-4 flex gap-4 flex-wrap">
         <a className="text-xs text-gray-300 mx-4" href="#">
