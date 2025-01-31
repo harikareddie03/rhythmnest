@@ -1,12 +1,16 @@
+
 import { useEffect, useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import { userActor } from "../../states/Actors/UserActor";
+import { useAuth } from "../../context/AuthContext"; // Import AuthContext
+
 const Login = () => {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.account);
+  const { login } = useAuth(); // Get login function from AuthContext
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
@@ -28,26 +32,35 @@ const Login = () => {
       body: d,
     });
     const data = await res.json();
+
     if (data.success) {
       toast.success(data.message);
       localStorage.setItem("token", JSON.stringify(data.token));
       dispatch(userActor(data.user));
+
+      // ✅ Store user details in AuthContext
+      login({ email: data.user.email, username: data.user.username });
+
       navigate("/");
     } else {
       toast.error(data.message);
     }
   };
+
   const onChange = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
+
   return (
     <>
-      <header className="flex justify-center items-center py-4 px-4 bg-[#1a1919]">
+      {/* Your existing JSX for the login form */}
+      <header className="flex justify-center items-center py-4 px-4 bg-white">
         <center>
           <div className="flex items-center">
             <Link to="/">
@@ -61,8 +74,8 @@ const Login = () => {
           </div>
         </center>
       </header>
-      <div className="bg-[#1a1919] py-10 w-full">
-        <div className="bg-black py-10 text-center w-1/2 mx-auto">
+      <div className="bg-white py-10 w-full">
+        <div className="bg-white py-10 text-center w-1/2 mx-auto">
           <h1 className="text-5xl my-12 font-semibold">Log in to RhythmNest</h1>
           <div className="border-b border-gray-400 w-3/4 my-4 mx-auto"></div>
           <form onSubmit={loginUser} className="text-center mx-auto w-1/2 ">
@@ -127,7 +140,7 @@ const Login = () => {
 
             <Link
               to="/signup"
-              className="text-white hover:text-green-500 font-semibold underline mx-auto"
+              className="text-grey hover:text-green-500 font-semibold underline mx-auto"
             >
               Sign up for RhythmNest
             </Link>

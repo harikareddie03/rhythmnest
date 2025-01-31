@@ -4,6 +4,7 @@ const { generateToken } = require("../helper/generateToken");
 const jsonWeb = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const verifyToken = require("../middlewares/authMiddleware");
 
 router.post("/login", async (req, res) => {
 
@@ -88,4 +89,59 @@ router.get("/users", async (req, res) => {
   const users = await User.find();
   res.json({ users, success: true, message: "users found" });
 });
+
+
+router.get("/profile", verifyToken, async (req, res) => {
+  try {
+    // Use the user ID from the token (added by the middleware)
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Respond with user details
+    res.status(200).json({
+      success: true,
+      user: {
+        username: user.username,
+        email: user.email,
+        DOB: user.DOB,
+        gender: user.gender,
+      },
+      playlists: user.playlists || [], // Assuming playlists are part of the user document
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+router.put("/update", verifyToken, async (req, res) => {
+  try {
+    const { username, email, phone, gender } = req.body;
+
+    // Update user in the database
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { username, email, phone, gender },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 module.exports = router;

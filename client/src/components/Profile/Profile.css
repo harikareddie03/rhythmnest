@@ -1,0 +1,146 @@
+/* profile.css */
+
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Section */
+.profile-header {
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header h1 {
+    margin: 1rem 0 0.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.profile-header p {
+    font-size: 1rem;
+    color: #ffe0e6;
+}
+
+/* Profile Form */
+.profile-form {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    margin-top: -50px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #ff5f6d;
+    box-shadow: 0 0 0 2px rgba(255, 95, 109, 0.2);
+}
+
+.form-group .flex {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #ddd;
+}
+
+button:hover:not(:disabled) {
+    background-color: #ff4040;
+}
+
+.bg-red-500 {
+    background-color: #ff5f6d;
+}
+
+.bg-red-600:hover {
+    background-color: #e04455;
+}
+
+.bg-gray-700 {
+    background-color: #555;
+}
+
+.bg-gray-800:hover {
+    background-color: #444;
+}
+
+/* Logout Button */
+.logout button {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .profile-form {
+        padding: 2rem;
+    }
+
+    .form-group label {
+        font-size: 1rem;
+    }
+
+    .form-group input {
+        font-size: 1.1rem;
+    }
+}

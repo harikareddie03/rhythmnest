@@ -14,9 +14,9 @@ import Footer from "../Footer/Footer";
 export const songs = [
   {
     id: Math.random() * Date.now(),
-    title: "Tum Hi Ho",
+    title: "jamurathiri",
     artist: "Arijit Singh",
-    mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
+    mp3: new Audio("/assets/mp3/jamurathiri.mp3"),
     img: "/assets/Arijit-1.jpg",
   },
   {

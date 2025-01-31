@@ -1,87 +1,49 @@
-// import "./Card.css";
-// import { FaPause, FaPlay } from "react-icons/fa";
-// import { useDispatch, useSelector } from "react-redux";
-// import { pauseSong, playSong } from "../../states/Actors/SongActor";
-// import { useGlobalContext } from "../../states/Contet";
-// // eslint-disable-next-line react/prop-types
-// const Card = ({ song, idx }) => {
-//   const { masterSong, isPlaying } = useSelector((state) => state.mainSong);
-//   const { resetEverything, setSongIdx } = useGlobalContext();
-//   const dispatch = useDispatch();
-
-//   const handlePlay = (song) => {
-//     setSongIdx(idx);
-//     if (isPlaying) {
-//       masterSong.mp3.currentTime = 0;
-//       masterSong.mp3.pause();
-//       resetEverything();
-//     }
-//     dispatch(playSong(song));
-//   };
-//   const handlePause = () => {
-//     dispatch(pauseSong());
-//   };
-//   return (
-//     song && (
-//       <div className="card bg-[#181818] col-span-1 p-4 rounded-lg">
-//         <div className="relative">
-//           <img
-//             // eslint-disable-next-line react/prop-types
-//             src={song.img}
-//             className="w-full rounded-lg"
-//             alt=""
-//           />
-//           {/* eslint-disable-next-line react/prop-types */}
-//           {masterSong.id === song.id && isPlaying ? (
-//             <button
-//               onClick={handlePause}
-//               className="flex items-center play_btn absolute bottom-0 right-0 rounded-[50%] bg-green-500 justify-center p-3"
-//             >
-//               <FaPause className="text-black text-xl" />
-//             </button>
-//           ) : (
-//             <button
-//               onClick={() => handlePlay(song)}
-//               className="flex items-center play_btn absolute bottom-0 right-0 rounded-[50%] bg-green-500 justify-center p-3"
-//             >
-//               <FaPlay className="text-black text-xl" />
-//             </button>
-//           )}
-//         </div>
-//         {/* eslint-disable-next-line react/prop-types */}
-//         <h3 className="text-sm font-semibold my-2">{song.artist}</h3>
-//         <p className="text-xs text-gray-400 leading-4 mb-8">
-//           {/* eslint-disable-next-line react/prop-types */}
-//           {song.title} - {song.artist}
-//         </p>
-//       </div>
-//     )
-//   );
-// };
-
-// export default Card;
 import "./Card.css";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { pauseSong, playSong } from "../../states/Actors/SongActor";
 import { useGlobalContext } from "../../states/Contet";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
-// eslint-disable-next-line react/prop-types
 const Card = ({ song, idx }) => {
   const { masterSong, isPlaying } = useSelector((state) => state.mainSong);
   const { resetEverything, setSongIdx } = useGlobalContext();
+  const { isLoggedIn } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handlePlay = (song) => {
-    setSongIdx(idx);
-    if (isPlaying) {
-      masterSong.mp3.currentTime = 0;
-      masterSong.mp3.pause();
-      resetEverything();
+    console.log("Login status in Card.jsx:", isLoggedIn);
+
+    if (!isLoggedIn) {
+      console.log("Redirecting to login...");
+      navigate("/login-prompt");
+      return;
     }
-    dispatch(playSong(song));
+
+    setSongIdx(idx);
+
+    if (masterSong?.id === song.id && isPlaying) {
+      console.log("Restarting the current song...");
+
+      if (!masterSong?.mp3) {
+        console.error("Audio object is undefined!");
+        return;
+      }
+
+      masterSong.mp3.currentTime = 0;
+      masterSong.mp3.play();
+    } else {
+      console.log("Playing a new song:", song);
+      resetEverything();
+      dispatch(playSong(song));
+    }
   };
+
+
   const handlePause = () => {
+    console.log("Pausing the song...");
     dispatch(pauseSong());
   };
 
@@ -90,34 +52,30 @@ const Card = ({ song, idx }) => {
       <div className="card bg-white col-span-1 p-4 rounded-full">
         <div className="relative">
           <img
-            // eslint-disable-next-line react/prop-types
             src={song.img}
             className="w-full h-full object-cover rounded-full"
-            alt=""
+            alt={song.title}
           />
-          {/* eslint-disable-next-line react/prop-types */}
-          {masterSong.id === song.id && isPlaying ? (
+          {masterSong?.id === song.id && isPlaying ? (
             <button
               onClick={handlePause}
-              className="flex items-center play_btn absolute bottom-2 right-2 rounded-[50%] bg-red-500 justify-center p-3"
+              className="flex items-center play_btn absolute bottom-2 right-2 rounded-full bg-red-500 justify-center p-3"
             >
               <FaPause className="text-black text-xl" />
             </button>
           ) : (
             <button
               onClick={() => handlePlay(song)}
-              className="flex items-center play_btn absolute bottom-2 right-2 rounded-[50%] bg-red-500 justify-center p-3"
+              className="flex items-center play_btn absolute bottom-2 right-2 rounded-full bg-red-500 justify-center p-3"
             >
               <FaPlay className="text-black text-xl" />
             </button>
           )}
         </div>
-        {/* eslint-disable-next-line react/prop-types */}
         <h3 className="text-sm font-semibold my-2 text-red-500">
           {song.artist}
         </h3>
         <p className="text-xs text-red-500 leading-4 mb-8">
-          {/* eslint-disable-next-line react/prop-types */}
           {song.title} - {song.artist}
         </p>
       </div>
