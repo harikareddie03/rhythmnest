@@ -3,9 +3,8 @@ const mongoose = require("mongoose");
 const SongSchema = new mongoose.Schema({
     title: { type: String, required: true },
     artist: { type: String, required: true },
-    album: { type: String },
-    genre: { type: String },
     songUrl: { type: String, required: true }, // URL to the uploaded song
+    artistPhotoUrl: { type: String, required: true }, // URL to the artist's photo
     createdAt: { type: Date, default: Date.now }
 });
 
