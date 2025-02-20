@@ -89,7 +89,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const getUser = async () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     console.log("local=", token)// Use plain string, not JSON.parse
     if (token) {
       try {

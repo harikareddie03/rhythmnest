@@ -7,10 +7,12 @@ const Profile = () => {
     const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate();
 
+
     // Fetch user details on component mount
     useEffect(() => {
         const fetchUserDetails = async () => {
-            const token = JSON.parse(localStorage.getItem("token"));
+            const token = sessionStorage.getItem("token");
+            console.log("token1", token);
 
             if (!token) {
                 toast.error("Please log in to view your profile.");
@@ -19,20 +21,23 @@ const Profile = () => {
             }
 
             try {
-                const res = await fetch("http://localhost:8080/api/user/profile", {
+                const res = fetch("http://localhost:8080/api/user/profile", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
+                if (res.fullfilled)
+                    console.log(res);
                 const data = await res.json();
+
+                console.log(data);
                 if (data.success) {
                     setUserDetails(data.user);
                 } else {
                     toast.error(data.message);
-                    localStorage.removeItem("token");
-                    navigate("/profile");
+                    sessionStorage.removeItem("token");
+                    navigate("/login");
                 }
             } catch (error) {
                 toast.error("Failed to fetch profile data. Please try again later.");
