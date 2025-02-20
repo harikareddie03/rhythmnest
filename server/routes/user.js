@@ -238,13 +238,14 @@ router.get("/profile", verifyToken, async (req, res) => {
   try {
     // Use the user ID from the token (added by the middleware)
     const user = await User.findById(req.user.id);
+    console.log("getprofile", user);
 
     if (!user) {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
     // Respond with user details
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       user: {
         username: user.username,
