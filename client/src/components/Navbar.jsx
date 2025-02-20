@@ -14,6 +14,8 @@ import debounce from "lodash.debounce";
 
 // Import your logo image
 import logo from "../assets/rythmnest1.jpeg"; // Adjust the path as needed
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.account);
@@ -26,7 +28,8 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     () => JSON.parse(localStorage.getItem("isDarkMode")) || false
   );
-
+  const { user } = useAuth();  // Use user from AuthContext
+  const isLoggedIn = !!user;   // Convert user object to boolean
   const debouncedFilterSongs = useCallback(
     debounce((value) => {
       const fil = songs.filter((song) => {
@@ -48,7 +51,10 @@ const Navbar = () => {
 
   const logoutUser = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem("user");
+    window.location.reload();
+    // toast.success("loggedout successfully");
+    navigate("/");
     dispatch(logOutUser());
   };
 
@@ -100,7 +106,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center w-1/3 justify-end">
-        {!isAuthenticated ? (
+        {!isLoggedIn ? (
           <div className="flex items-center gap-4">
             <Link
               to={"/signup"}

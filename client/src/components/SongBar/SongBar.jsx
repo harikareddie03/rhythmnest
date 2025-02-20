@@ -1,31 +1,37 @@
-
 import React from "react";
-import { useAuth } from "../../context/AuthContext";// Ensure this path is correct
+import { useAuth } from "../../context/AuthContext"; // Ensure this path is correct
 import { useNavigate } from "react-router-dom";
 
 const SongBar = ({ song }) => {
-    const { isLoggedIn } = useAuth(); // Access login status
+    const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
+    const audioRef = React.useRef(null); // Reference for audio element
 
     const handlePlaySong = () => {
-        console.log("Play button clicked."); // Log to confirm the function is called
+        console.log("Play button clicked.");
         console.log("Login status:", isLoggedIn);
 
         if (!isLoggedIn) {
             console.log("User not logged in. Redirecting to login prompt...");
-            navigate("/login-prompt"); // Redirect if not logged in
+            navigate("/login-prompt");
         } else {
             console.log("User logged in. Playing song...");
-            // Logic for playing the song goes here
+            if (audioRef.current) {
+                audioRef.current.play();
+            } else {
+                console.error("Audio element not found!");
+            }
         }
     };
 
     return (
         <div className="song-bar">
-            <h3>{song.title}</h3>
+            <h3>{song?.title}</h3>
             <button onClick={handlePlaySong} className="play-button">
                 Play
             </button>
+            {/* Add audio element */}
+            <audio ref={audioRef} src={song?.url} controls={false} />
         </div>
     );
 };

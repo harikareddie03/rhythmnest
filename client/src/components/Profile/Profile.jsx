@@ -32,7 +32,7 @@ const Profile = () => {
                 } else {
                     toast.error(data.message);
                     localStorage.removeItem("token");
-                    navigate("/login");
+                    navigate("/profile");
                 }
             } catch (error) {
                 toast.error("Failed to fetch profile data. Please try again later.");

@@ -9,7 +9,8 @@ import { useAuth } from "../../context/AuthContext";
 const Card = ({ song, idx }) => {
   const { masterSong, isPlaying } = useSelector((state) => state.mainSong);
   const { resetEverything, setSongIdx } = useGlobalContext();
-  const { isLoggedIn } = useAuth();
+  const { user } = useAuth();  // Use user from AuthContext
+  const isLoggedIn = !!user;   // Convert user object to boolean
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,7 +41,6 @@ const Card = ({ song, idx }) => {
       dispatch(playSong(song));
     }
   };
-
 
   const handlePause = () => {
     console.log("Pausing the song...");

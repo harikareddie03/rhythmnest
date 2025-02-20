@@ -11,19 +11,28 @@ import "./Sidebar.css";
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState([]);
   const { user } = useAuth(); // Get authenticated user
-  const isAdmin = user?.email === "admin@gmail.com"; // Check if admin
+  const isAdmin = user?.email === "admin2@gmail.com"; // Check if admin
 
   const getPlaylists = async () => {
-    const res = await fetch("http://137.184.81.218:5173/api/playlist/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const res = await fetch("http://137.184.81.218:5173/api/playlist/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    let d = await res.json();
-    setPlaylists(d.playlists);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setPlaylists(data.playlists);
+    } catch (error) {
+      console.error("Failed to fetch playlists:", error);
+    }
   };
+
 
   useEffect(() => {
     getPlaylists();
