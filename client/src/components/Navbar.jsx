@@ -50,10 +50,10 @@ const Navbar = () => {
   };
 
   const logoutUser = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     window.location.reload();
-    // toast.success("loggedout successfully");
+    toast.success("loggedout successfully");
     navigate("/");
     dispatch(logOutUser());
   };

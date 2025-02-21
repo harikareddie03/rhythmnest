@@ -12,7 +12,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             const token = sessionStorage.getItem("token");
-            console.log("token1", token);
+            console.log("Token before request:", token);
 
             if (!token) {
                 toast.error("Please log in to view your profile.");
@@ -21,17 +21,19 @@ const Profile = () => {
             }
 
             try {
-                const res = fetch("http://localhost:8080/api/user/profile", {
+                const res = await fetch("http://localhost:8080/api/user/profile", {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                if (res.fullfilled)
-                    console.log(res);
-                const data = await res.json();
+                console.log("Raw response:", res);
+                if (!res.ok) {
+                    throw new Error(`Error: ${res.status} - ${res.statusText}`);
+                }
 
-                console.log(data);
+                const data = await res.json();
+                console.log("Fetched User Data:", data);
                 if (data.success) {
                     setUserDetails(data.user);
                 } else {
@@ -40,6 +42,8 @@ const Profile = () => {
                     navigate("/login");
                 }
             } catch (error) {
+                console.error("Fetch Profile Error:", error.message);
+
                 toast.error("Failed to fetch profile data. Please try again later.");
             }
         };
@@ -58,7 +62,8 @@ const Profile = () => {
 
     // Save changes and update the backend
     const handleSaveChanges = async () => {
-        const token = JSON.parse(localStorage.getItem("token"));
+        const token = sessionStorage.getItem("token");
+
 
         try {
             const res = await fetch("http://localhost:8080/api/user/update", {
@@ -87,7 +92,7 @@ const Profile = () => {
         toast.success("Logged out successfully!");
         navigate("/login");
     };
-
+    console.log("det-", userDetails);
     // Render loading state if data hasn't been fetched yet
     if (!userDetails) {
         return (
@@ -134,7 +139,7 @@ const Profile = () => {
                         type="email"
                         name="email"
                         value={userDetails.email}
-                        onChange={handleInputChange}
+                        // onChange={handleInputChange}
                         className="w-full border text-black border-gray-300 p-2 rounded-md"
                     />
                 </div>
