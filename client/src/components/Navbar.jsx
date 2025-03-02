@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { songs } from "./Home/Home";
+//import { songs } from "./Home/Home";
 import { useGlobalContext } from "../states/Contet";
 import { logOutUser } from "../states/Actors/UserActor";
 import debounce from "lodash.debounce";
@@ -21,7 +21,9 @@ const Navbar = () => {
   const { isAuthenticated } = useSelector((state) => state.account);
   const location = useLocation();
   const [query, setQuery] = useState("");
-  const { setFilteredSongs } = useGlobalContext();
+  const [songs, setSongs] = useState([]);
+  //const { setFilteredSongs } = useGlobalContext();
+  const [filteredSongs, setFilteredSongs] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showDropDown, setShowDropDown] = useState(false);
@@ -30,24 +32,52 @@ const Navbar = () => {
   );
   const { user } = useAuth();  // Use user from AuthContext
   const isLoggedIn = !!user;   // Convert user object to boolean
-  const debouncedFilterSongs = useCallback(
-    debounce((value) => {
-      const fil = songs.filter((song) => {
-        return (
-          song.title.toLowerCase().includes(value.toLowerCase()) ||
-          song.artist.toLowerCase().includes(value.toLowerCase())
-        );
-      });
-      setFilteredSongs(value === "" ? [] : fil);
-    }, 300),
-    [setFilteredSongs]
-  );
 
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/songs"); // Replace with your actual API endpoint
+        const data = await response.json();
+        // console.log("Fetched songs1:", data.songs);
+        setSongs(data.songs || []); // Ensure API response has `songs` array
+      } catch (error) {
+        console.error("Error fetching songs:", error.message);
+      }
+    };
+
+    fetchSongs();
+  }, []);
+
+  useEffect(() => {
+    console.log("Fetched songs2:", songs);
+  }, [songs]);
+  
+  const debouncedFilterSongs = useCallback(
+    debounce((value, songsList = []) => { // Default to an empty array
+      if (!Array.isArray(songsList) || songsList.length === 0) return; // Avoid filtering if songsList is not an array or is empty
+  
+      const filtered = songsList.filter((song) =>
+        song.title.toLowerCase().includes(value.toLowerCase()) ||
+        song.artist.toLowerCase().includes(value.toLowerCase())
+      );
+  
+      // console.log("Filtered Songs1:", filtered);
+      setFilteredSongs(filtered);
+    }, 300),
+    [songs] // Added songs as a dependency
+  );
+  
+  
+  useEffect(() => {
+    console.log("Filtered Songs2:", filteredSongs);
+  }, [filteredSongs]);
+  
   const filterSongs = (e) => {
     const value = e.target.value;
     setQuery(value);
-    debouncedFilterSongs(value);
+    debouncedFilterSongs(value, songs); // Pass latest songs array
   };
+  
 
   const logoutUser = () => {
     sessionStorage.removeItem("token");
@@ -102,6 +132,7 @@ const Navbar = () => {
             className="block w-full rounded-full pl-12 border-0 text-gray-300 shadow-sm ring ring-transparent placeholder:text-gray-400 focus:ring-3 focus:ring-inset focus:ring-white outline-none p-3 hover:ring-white/20 bg-[#1a1919]"
           />
           <FaSearch className="absolute left-4 top-8 text-red-500" />
+          
         </div>
       </div>
 

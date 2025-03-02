@@ -7,9 +7,12 @@ body {
 
 body.dark-mode {
     background-color: #070707;
-    color: #e0e0e0;
+    color:black;
+    
 }
-
+.card.dark-mode{
+    background-color: #e0e0e0;
+}
 .navbar {
     display: flex;
     justify-content: space-between;

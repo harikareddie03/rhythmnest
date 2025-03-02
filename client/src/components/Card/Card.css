@@ -21,7 +21,6 @@
 
 .card {
     background-color: var(--card_pri_bg);
-    border-radius: 50%;
     /* Makes the card circular */
     overflow: hidden;
     /* Ensures content stays within the circular shape */
@@ -30,7 +29,6 @@
 }
 
 .card img {
-    border-radius: 50%;
     /* Makes the image circular */
     object-fit: cover;
     /* Ensures the image fits well within the card */
@@ -38,6 +36,7 @@
 
 .card:hover {
     /* background: var(--card_bg); */
+    background-color: rgb(227, 231, 231);
     cursor: pointer;
     transition: all 0.2s ease-in;
     /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); */
