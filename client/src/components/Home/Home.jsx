@@ -60,15 +60,13 @@ const Home = () => {
   const { getUser } = useGlobalContext();
   const [songs, setSongs] = useState([]);
 
-  // Fetch songs from API
   const fetchUpdatedSongs = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/songs"); // Update API URL if needed
+      const res = await fetch("http://localhost:8080/api/songs"); 
       const data = await res.json();
       // console.log("Updated song list:", data.songs);
 
       if (data.success) {
-        
         setSongs(data.songs);
       } else {
         console.error("Failed to fetch songs");

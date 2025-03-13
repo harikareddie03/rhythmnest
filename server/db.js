@@ -1,14 +1,3 @@
-// const mongoose = require("mongoose");
-
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(() => {
-//     console.log("connected to db");
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });  
-
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
@@ -23,7 +12,7 @@ const connectDB = async () => {
     console.log("MongoDB connected successfully");
   } catch (err) {
     console.error("Error connecting to MongoDB:", err.message);
-    process.exit(1); // Exit the process with failure
+    process.exit(1); 
   }
 };
 

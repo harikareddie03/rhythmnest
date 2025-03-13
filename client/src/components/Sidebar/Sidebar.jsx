@@ -105,9 +105,12 @@ const Sidebar = () => {
               <>
                 <p className="font-bold text-red-500">Create your first playlist</p>
                 <p className="font-semibold text-red-500">It's easy, we'll help you</p>
+                <Link to="/create-playlist">
                 <button className="rounded-full text-white mt-4 px-4 py-0 bg-red-500 font-semibold">
                   Create Playlist
                 </button>
+                </Link>
+                
               </>
             )}
           </div>

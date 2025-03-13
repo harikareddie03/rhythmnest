@@ -31,41 +31,6 @@ const AddSong = () => {
             }));
         }
     };
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append("title", songDetails.title);
-    //     formData.append("artist", songDetails.artist);
-    //     formData.append("artistPhoto", songDetails.artistPhoto);
-    //     formData.append("songFile", songDetails.songFile);
-
-    //     try {
-    //         const res = await fetch("http://localhost:8080/api/songs/add", {
-    //             method: "POST",
-    //             body: formData,
-    //             headers: {
-    //                 "Authorization": Bearer ${token},
-    //             },
-    //             credentials: "include",
-    //         });
-
-    //         if (!res.ok) {
-    //             throw new Error("Failed to add song. Server responded with error.");
-    //         }
-
-    //         const data = await res.json();
-    //         if (data.success) {
-    //             toast.success("Song added successfully!");
-    //             navigate("/");
-    //         } else {
-    //             toast.error(data.message || "Failed to add song!");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error adding song:", error);
-    //         toast.error(error.message || "Server error!");
-    //     }
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
