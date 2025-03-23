@@ -1,52 +1,3 @@
-// import {
-//     PLAY_SONG_REQUEST,
-//     PAUSE_SONG_REQUEST,
-//     PLAY_MASTER,
-//     PAUSE_MASTER,
-// } from "../Contants/SongConstant";
-
-// // export const playSong = (song) => async (dispatch) => {
-// //     dispatch({ type: PLAY_SONG_REQUEST, payload: song });
-// // };
-// export const playSong = (song) => async (dispatch) => {
-//     if (!song.songUrl) {
-//         console.error("No valid song URL!");
-//         return;
-//     }
-
-//     const fullUrl = `http://localhost:8080${song.songUrl}`;  // Make sure this is the correct base URL
-
-//     console.log("Full audio path:", fullUrl);
-
-//     const audio = new Audio(fullUrl);  // Create an Audio object
-
-//     dispatch({
-//         type: PLAY_SONG_REQUEST,
-//         payload: { 
-//             ...song, 
-//             mp3: audio,  // Attach the Audio object
-//         },
-//     });
-
-//     // Auto-play the song
-//     setTimeout(() => {
-//         audio.play().catch((error) => console.error("Audio play error:", error));
-//     }, 100);
-// };
-
-// export const pauseSong = () => async (dispatch) => {
-//     dispatch({ type: PAUSE_SONG_REQUEST });
-// };
-// export const pauseMaster = () => async (dispatch) => {
-//     dispatch({ type: PAUSE_MASTER });
-// };
-// export const playMaster = () => async (dispatch) => {
-//     dispatch({ type: PLAY_MASTER });
-// };
-// export const searchSongs = (value) => async (dispatch) => {
-    
-//     dispatch({ type: PLAY_MASTER });
-// };
 
 
 import {
@@ -54,6 +5,7 @@ import {
     PAUSE_SONG_REQUEST,
     PLAY_MASTER,
     PAUSE_MASTER,
+    SEARCH_SONGS,
 } from "../Contants/SongConstant";
 export const playSong = (song) => async (dispatch, getState) => {
    
@@ -113,9 +65,32 @@ export const pauseMaster = () => async (dispatch) => {
 export const playMaster = () => async (dispatch) => {
     dispatch({ type: PLAY_MASTER });
 };
-export const searchSongs = (value) => async (dispatch) => {
+// export const searchSongs = (value) => async (dispatch) => {
     
-    dispatch({ type: PLAY_MASTER });
+//     dispatch({ type: PLAY_MASTER });
+// };
+
+
+export const searchSongs = (value) => async (dispatch) => {
+    try {
+        dispatch({ type: "SEARCH_SONGS_REQUEST" });  // Optional: Show loading state
+        
+        const response = await fetch(`http://localhost:8080/api/songs?search=${value}`);
+        
+        if (!response.ok) {
+            throw new Error("Failed to fetch songs");
+        }
+
+        const data = await response.json();
+
+        dispatch({ type: SEARCH_SONGS, payload: data });  // Dispatch search results
+
+    } catch (error) {
+        console.error("Error fetching songs:", error);
+        dispatch({ type: "SEARCH_SONGS_ERROR", payload: error.message });
+    }
 };
+
+
 
 

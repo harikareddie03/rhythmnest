@@ -15,14 +15,6 @@ const Card = ({ song, idx }) => {
   const navigate = useNavigate();
   const isCurrentSongPlaying = isPlaying && masterSong?.id === song?._id;
 
-  // console.log("🔍 Card.jsx - Received Redux State:", masterSong);
-  // console.log("Card.jsx:", {
-  //   isPlaying,
-  //   masterSongId: masterSong?.id,
-  //   songId: song?._id,
-  //   isCurrentSongPlaying
-  // });
-
   const handlePlay = () => {
     if (!user) {
       navigate("/login-prompt");
@@ -47,7 +39,7 @@ const Card = ({ song, idx }) => {
       <div className="relative">
         <img
           src={`http://localhost:8080${song?.img || song?.artistPhotoUrl}`}
-          className="w-full h-100 object-cover"
+          className="w-100 h-50 object-cover"
           alt={song?.title}
         />
         <button

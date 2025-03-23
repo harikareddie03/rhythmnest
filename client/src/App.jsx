@@ -15,6 +15,10 @@ import Profile from './components/Profile/Profile';
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute"; 
 import { AuthProvider } from "./context/AuthContext"; 
 import AddSong from './components/AddSong/AddSong';
+import CreatePlaylist from './components/CreatePlaylist/CreatePlaylist';
+import PlaylistDetails from './components/PlaylistDetails/PlaylistDetails';
+import Playlists from './components/Playlists/Playlists';
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -30,7 +34,9 @@ const App = () => {
               <Route path="/search" element={<Search />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/add-song" element={<AddSong />} />
-              
+              <Route path="/create-playlist" element={<CreatePlaylist/>}/>
+              <Route path="/playlists" element={<Playlists />} />
+        <Route path="/playlist/:id" element={<PlaylistDetails />} />
             </Routes>
           </Router>
           <ToastContainer

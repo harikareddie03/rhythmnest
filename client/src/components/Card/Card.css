@@ -1,42 +1,27 @@
-/* .card {
-    background-color: var(--card_pri_bg);
-}
 
-.card:hover {
-    background: var(--card_bg);
-
-    cursor: pointer;
-    transition: all 0.2s ease-in;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-}
-
-.play_btn {
-    display: none !important;
-}
-
-.card:hover .play_btn {
-    display: block !important;
-    transition: all .3s ease-in;
-} */
 
 .card {
+    width: 200px;  /* Set a fixed width */
+    height: 250px; /* Set a fixed height */
+    overflow: hidden; /* Ensures content stays within the square */
+    text-align: center; /* Centers text */
+    align-items: center;
+    justify-content: center;
     background-color: var(--card_pri_bg);
-    /* Makes the card circular */
-    overflow: hidden;
-    /* Ensures content stays within the circular shape */
-    text-align: center;
-    /* Centers text */
 }
 
 .card img {
-    /* Makes the image circular */
-    object-fit: cover;
-    /* Ensures the image fits well within the card */
+    width: 12rem;  /* Ensure image fills the card */
+    height: 10rem; /* Ensure image fills the card */
+    border-radius: 0.5rem;
+    object-fit: cover; /* Ensures the image maintains aspect ratio and fills the square */
 }
+
+
 
 .card:hover {
     /* background: var(--card_bg); */
-    background-color: rgb(227, 231, 231);
+    background-color: rgb(181, 190, 190);
     cursor: pointer;
     transition: all 0.2s ease-in;
     /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); */

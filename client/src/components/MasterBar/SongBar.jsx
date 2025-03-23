@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineHeart, AiOutlinePlaySquare } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlinePlaySquare } from "react-icons/ai";
 import { IoMdSkipBackward, IoMdSkipForward } from "react-icons/io";
 import { CgScreen } from "react-icons/cg";
 import { BiRepeat, BiShuffle } from "react-icons/bi";
@@ -104,16 +104,34 @@ const SongBar = () => {
     
 
     if (!isLoggedIn) return null;
+    //console.log("MasterSong Image Path:", masterSong?.img);
+
 
     return (
         <div className="fixed w-full flex px-2 items-center justify-between bottom-0 left-0 h-20 bg-red-500">
             <div className="w-2/12 flex items-center gap-2">
-                <img src={masterSong?.img || "/assets/default.jpg"} alt="" className="h-12" />
+            <img 
+  src={masterSong?.artistPhotoUrl 
+    ? `http://localhost:8080${masterSong.artistPhotoUrl}` 
+    : "http://localhost:8080/uploads/default.jpg"} 
+  alt="Artist"
+  className="h-12"
+  onError={(e) => { 
+    e.target.onerror = null; 
+    e.target.src = "http://localhost:8080/uploads/default.jpg"; 
+  }}
+/>
+
                 <div>
                     <h3 className="text-xs font-medium">{masterSong?.title || "Unknown"}</h3>
                     <span className="text-[10px]">{masterSong?.artist || "Unknown"}</span>
                 </div>
-                <AiOutlineHeart className="cursor-pointer hover:text-green-400" />
+                
+                <AiOutlineHeart className="cursor-pointert text-2xl hover:text-white" />
+               
+
+       
+          
             </div>
 
             <div className="w-5/12">

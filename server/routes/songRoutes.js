@@ -7,9 +7,6 @@ const isAuthenticated = require("../middlewares/auth");
 
 const router = express.Router();
 
-// ==========================
-// 📂 Multer Configuration (File Uploads)
-// ==========================
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const folder = file.mimetype.startsWith("image/") ? "artistPhotos" : "songs";
@@ -22,9 +19,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ==========================
-// 🎵 POST: Add a New Song (Protected Route)
-// ==========================
 router.post(
     "/add",
     verifyToken,
@@ -74,26 +68,32 @@ router.post(
     }
 );
 
-// ==========================
-// 🎶 GET: Fetch All Songs
-// ==========================
 router.get("/", async (req, res) => {
     try {
-        const songs = await Song.find();
+        const { search } = req.query;
+        let query = {};
+
+        if (search) {
+            query = {
+                $or: [
+                    { title: { $regex: search, $options: "i" } }, // Case-insensitive title search
+                    { artist: { $regex: search, $options: "i" } }, // Case-insensitive artist search
+                ],
+            };
+        }
+
+        const songs = await Song.find(query);
         res.status(200).json({ success: true, songs });
     } catch (error) {
         console.error("❌ Error fetching songs:", error);
         res.status(500).json({
             success: false,
-            message: "Internal Server Error",
+            message: "Internal Server Error.",
             error: error.message,
         });
     }
 });
 
-// ==========================
-// ▶️ POST: Play a Song (Protected Route)
-// ==========================
 router.post("/playSong", verifyToken, isAuthenticated, async (req, res) => {
     try {
         res.status(200).json({ success: true, message: "Song is playing" });
@@ -106,5 +106,7 @@ router.post("/playSong", verifyToken, isAuthenticated, async (req, res) => {
         });
     }
 });
+
+
 
 module.exports = router;

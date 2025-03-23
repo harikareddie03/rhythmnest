@@ -4,82 +4,42 @@ import Navbar from "../Navbar";
 import { useGlobalContext } from "../../states/Contet";
 import Card from "../Card/Card";
 import SongBar from "../MasterBar/SongBar";
+import {
+  FaSearch,
+  FaUser,
+} from "react-icons/fa";
 
 const Search = () => {
-  const { filteredSongs } = useGlobalContext();
+  const { filteredSongs, setSearchTerm } = useGlobalContext(); // ✅ Correct placement inside the function
+
   return (
     <Layout>
       <Navbar />
-      <div className="bg-primary mx-4 px-4 py-4 home ">
-        <div className="flex justify-between mb-4 pt-4 items-center">
-          <span className="text-xl font-bold hover:underline cursor-pointer">
-            Browse All
-          </span>
+      <div className="bg-primary mx-4 px-4 py-4 home">
+        
+        {/* Search Box with FaSearch Icon */}
+        <div className="relative w-full mb-4">
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+          <input
+            type="text"
+            placeholder="Search songs..."
+            className="border p-2 pl-10 w-full bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-        {filteredSongs?.length <= 0 && (
-          <div className="grid  gap-6 grid-cols-5">
-            <div className="col-span-1">
-              <CategoryCard
-                title={"Live Events"}
-                img={"/assets/Arijit-1.jpg"}
-                color={"bg-purple-500"}
-              />
-            </div>
-            <div className="col-span-1">
-              <CategoryCard
-                title={"Made For You"}
-                img={"/assets/Arijit-1.jpg"}
-                color={"bg-red-500"}
-              />
-            </div>
-            <div className="col-span-1">
-              <CategoryCard
-                title={"New Releases"}
-                img={"/assets/Arijit-1.jpg"}
-                color={"bg-orange-500"}
-              />
-            </div>
-            <div className="col-span-1">
-              <CategoryCard
-                title={"Live Events"}
-                img={"/assets/Arijit-1.jpg"}
-                color={"bg-purple-500"}
-              />
-            </div>
-            <div className="col-span-1">
-              <CategoryCard
-                title={"Live Events"}
-                img={"/assets/Arijit-1.jpg"}
-                color={"bg-purple-500"}
-              />
-            </div>
-          </div>
-        )}
-        {filteredSongs?.length > 0 && (
-          <div className="grid  gap-6 grid-cols-5">
-            {filteredSongs.map((song) => {
-              return <Card key={song.id} song={song} />;
-            })}
-          </div>
-        )}
+
+        {/* Songs Grid */}
+        <div className="grid gap-6 grid-cols-5">
+          {filteredSongs.length > 0 ? (
+            filteredSongs.map((song) => <Card key={song.id} song={song} />)
+          ) : (
+            <p className="text-white">No songs found.</p>
+          )}
+        </div>
       </div>
       <SongBar />
     </Layout>
   );
 };
 
-const CategoryCard = ({ title, img, color }) => {
-  return (
-    <div
-      className={`p-4 rounded-lg w-full  ${color} relative overflow-hidden h-56`}
-    >
-      <span className="text-xl font-semibold mt-2">{title}</span>
-      <img
-        src={img}
-        alt=""
-        className="w-1/2 h-1/2 absolute bottom-0 -right-8 rotate-45 object-cover"
-      />
-    </div>
-  );
-};
 export default Search;

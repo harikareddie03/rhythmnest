@@ -52,25 +52,19 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-2 bg-primary rounded-lg px-2 py-2">
-        <div className="flex px-4 justify-between mb-4 items-center gap-4">
-          <div className="flex gap-2 items-center">
-            <BiLibrary className="font-bold text-red-500 text-xl" />
-            <span className="text-red-500">Your library</span>
-          </div>
-          <button className="hover:bg-black/25 text-red-500 rounded-[50%] p-2">
-            <FaPlus className="font-bold text-red-500 text-xl" />
-          </button>
-        </div>
-
-        <div className="btns flex text-red-500 gap-4 mb-4">
-          <Link to={"/"} className="rounded-full mt-4 px-3 py-1 bg-white/10 text-red-500 text-sm">
-            Playlists
+      <div
+  className="mt-2 bg-primary rounded-lg px-2 py-2 cursor-pointer"
+  
+>
+  <div className="flex px-4 justify-between mb-4 items-center gap-4">
+    <div className="flex gap-2 items-center">
+      <BiLibrary className="font-bold text-red-500 text-xl" />
+      <Link to={"/playlists"} className="text-red-500 font-semibold">
+            your Playlists
           </Link>
-          <Link to={"/"} className="rounded-full mt-4 px-3 py-1 bg-white/10 text-red-500 text-sm">
-            Artists
-          </Link>
-        </div>
-
+    </div>
+  </div>
+</div>
         <div className="my-6 px-2">
           {playlists.map((p) => (
             <div key={p._id} className="flex text-red-500 gap-4 my-2">
@@ -105,7 +99,8 @@ const Sidebar = () => {
               <>
                 <p className="font-bold text-red-500">Create your first playlist</p>
                 <p className="font-semibold text-red-500">It's easy, we'll help you</p>
-                <Link to="/create-playlist">
+                <Link to="/create-playlist" className="hover:bg-black/25 text-red-500 rounded-[50%] p-2">
+
                 <button className="rounded-full text-white mt-4 px-4 py-0 bg-red-500 font-semibold">
                   Create Playlist
                 </button>

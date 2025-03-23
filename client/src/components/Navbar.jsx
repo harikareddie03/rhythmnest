@@ -111,11 +111,10 @@ const Navbar = () => {
 
       {/* Logo and Name Section */}
       <div className="flex gap-2 items-center"></div>
-      <FaAngleLeft className="bg-white/10 text-3xl p-1 rounded-full" />
-      <FaAngleRight className="bg-white/10 text-3xl p-1 rounded-full" />
+      
       <div className="flex items-center w-1/3">
         <img src={logo} alt="Logo" className="w-13 h-16 mr-5 rounded-full" />
-        <span className="text-red-500 text-xl font-semibold">RhythmNest</span>
+        <span className="text-red-500 text-3xl font-bold">RhythmNest</span>
       </div>
 
       <div className="flex gap-2 items-center w-1/2">
@@ -147,7 +146,7 @@ const Navbar = () => {
             </Link>
             <Link
               to={"/login"}
-              className="rounded-full text-black mt-4 px-8 text-white py-3 bg-red-500 font-semibold"
+              className="rounded-full text-black mt-4 px-8 py-3 bg-red-500 font-semibold"
             >
               Log In
             </Link>
