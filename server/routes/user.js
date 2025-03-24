@@ -146,4 +146,38 @@ router.put("/update", verifyToken, async (req, res) => {
   }
 });
 
+// router.post("/like", async (req, res) => {
+//   const { userId, songId } = req.body;
+
+//   try {
+//       const user = await db.collection("users").findOne({ _id: ObjectId(userId) });
+
+//       if (!user) {
+//           return res.status(404).json({ success: false, message: "User not found" });
+//       }
+
+//       const isLiked = user.likedSongs && user.likedSongs.includes(ObjectId(songId));
+
+//       if (isLiked) {
+//           // Unlike the song
+//           await db.collection("users").updateOne(
+//               { _id: ObjectId(userId) },
+//               { $pull: { likedSongs: ObjectId(songId) } }
+//           );
+//           return res.json({ success: true, isLiked: false });
+//       } else {
+//           // Like the song
+//           await db.collection("users").updateOne(
+//               { _id: ObjectId(userId) },
+//               { $addToSet: { likedSongs: ObjectId(songId) } }
+//           );
+//           return res.json({ success: true, isLiked: true });
+//       }
+//   } catch (error) {
+//       console.error("❌ Error updating liked songs:", error);
+//       res.status(500).json({ success: false, message: "Internal server error" });
+//   }
+// });
+
+
 module.exports = router;
