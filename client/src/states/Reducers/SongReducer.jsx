@@ -22,7 +22,7 @@ case "SEARCH_SONGS_ERROR":
     return { ...state, loading: false, error: action.payload };
 
         case PLAY_SONG_REQUEST:
-            console.log("✅ Reducer - PLAY_SONG_REQUEST:", action.payload); 
+            // console.log("✅ Reducer - PLAY_SONG_REQUEST:", action.payload); 
             return { 
                 ...state, 
                 masterSong: { ...action.payload, id: action.payload._id, isPlaying: true }, 

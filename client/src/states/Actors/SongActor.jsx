@@ -9,9 +9,9 @@ import {
 } from "../Contants/SongConstant";
 export const playSong = (song) => async (dispatch, getState) => {
    
-    console.log("🎵 SongActor.jsx - Attempting to play:", song);
+    // console.log("🎵 SongActor.jsx - Attempting to play:", song);
 if (!song || !song.songUrl) {
-    console.error("🚨 SongActor.jsx - Missing song data!", song);
+    // console.error("🚨 SongActor.jsx - Missing song data!", song);
     return;
 }
 
@@ -23,7 +23,7 @@ if (!song || !song.songUrl) {
     }
 
     const fullUrl = `http://localhost:8080${song.songUrl}`;
-    console.log("Full audio path:", fullUrl);
+    // console.log("Full audio path:", fullUrl);
 
     const audio = new Audio(fullUrl);
 
@@ -31,7 +31,7 @@ if (!song || !song.songUrl) {
         type: PLAY_SONG_REQUEST,
         payload: { 
             ...song, 
-            id: song.id,  // ✅ Ensure the song's original ID is used
+            id: song._id,  // ✅ Ensure the song's original ID is used
             mp3: audio, 
             isPlaying: true, 
         },
@@ -39,11 +39,11 @@ if (!song || !song.songUrl) {
 
     setTimeout(() => {
         audio.play()
-            .then(() => console.log("Playing:", song.id))
+            .then(() => console.log("Playing:", song._id))
             .catch((error) => console.error("Audio play error:", error));
     }, 100);
 
-    console.log("Redux State After Dispatch:", getState().mainSong);
+    // console.log("Redux State After Dispatch:", getState().mainSong);
 };
 
 export const pauseSong = () => async (dispatch, getState) => {

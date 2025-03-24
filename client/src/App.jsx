@@ -18,6 +18,7 @@ import AddSong from './components/AddSong/AddSong';
 import CreatePlaylist from './components/CreatePlaylist/CreatePlaylist';
 import PlaylistDetails from './components/PlaylistDetails/PlaylistDetails';
 import Playlists from './components/Playlists/Playlists';
+import LikedSongs from './components/LikedSongs/LikedSongs';
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/create-playlist" element={<CreatePlaylist/>}/>
               <Route path="/playlists" element={<Playlists />} />
         <Route path="/playlist/:id" element={<PlaylistDetails />} />
+        <Route path="/like" element={<LikedSongs />} />
             </Routes>
           </Router>
           <ToastContainer

@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
   const getUser = async () => {
     const token = sessionStorage.getItem("token");
     if (token) {
-      const res = await fetch("http://137.184.81.218:5000/api/user/me", {
+      const res = await fetch("http://localhost:8080/api/user/me", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -38,15 +38,31 @@ const CreatePlaylist = () => {
     fetchSongs();
   }, [searchTerm]);
 
-  const handleSelectSong = (song) => {
+  // const handleSelectSong = (song) => {
    
-    setSelectedSongs((prev) =>
-      prev.some((s) => s._id === song._id)
-        ? prev.filter((s) => s._id !== song._id)
-        : [...prev, song]
-    );
+  //   setSelectedSongs((prev) =>
+  //     prev.some((s) => s._id === song._id)
+  //       ? prev.filter((s) => s._id !== song._id)
+  //       : [...prev, song]
+  //   );
+  // };
+  const handleSelectSong = (song) => {
+    setSelectedSongs((prevSelected) => {
+      const isAlreadySelected = prevSelected.some((s) => s._id === song._id);
+  
+      console.log("🟢 Clicked Song:", song);
+      console.log("📌 Previously Selected:", prevSelected);
+  
+      if (isAlreadySelected) {
+        console.log("❌ Removing Song:", song.title);
+        return prevSelected.filter((s) => s._id !== song._id);
+      } else {
+        console.log("✅ Adding Song:", song.title);
+        return [...prevSelected, song];
+      }
+    });
   };
-
+  
   const handlePlayPause = (song) => {
     if (!song.songUrl) {
       console.error("Invalid song object:", song);
@@ -84,7 +100,7 @@ const CreatePlaylist = () => {
         };
         console.log("palload",payload);
         try {
-          const res = await fetch("http://localhost:8080/api/playlist/create", {
+          const res = await fetch("http://localhost:8080/api/playlist/create-playlist", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -125,7 +141,7 @@ const CreatePlaylist = () => {
           allSongs.map((song) => (
             <div
               key={song._id}
-              className={`p-2 border-b flex justify-between bg-white items-center ${
+              className={`p-2 border-b flex justify-between bg-gray items-center ${
                 selectedSongs.some((s) => s._id === song._id) ? "bg-gray-500" : ""
               }`}
               onClick={() => handleSelectSong(song)}

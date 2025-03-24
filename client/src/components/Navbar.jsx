@@ -7,7 +7,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-//import { songs } from "./Home/Home";
+// import { songs } from "./Home/Home";
 import { useGlobalContext } from "../states/Contet";
 import { logOutUser } from "../states/Actors/UserActor";
 import debounce from "lodash.debounce";
@@ -38,7 +38,7 @@ const Navbar = () => {
       try {
         const response = await fetch("http://localhost:8080/api/songs"); // Replace with your actual API endpoint
         const data = await response.json();
-        // console.log("Fetched songs1:", data.songs);
+        console.log("Fetched songs1:", data.songs);
         setSongs(data.songs || []); // Ensure API response has `songs` array
       } catch (error) {
         console.error("Error fetching songs:", error.message);
@@ -61,7 +61,7 @@ const Navbar = () => {
         song.artist.toLowerCase().includes(value.toLowerCase())
       );
   
-      // console.log("Filtered Songs1:", filtered);
+      console.log("Filtered Songs1:", filtered);
       setFilteredSongs(filtered);
     }, 300),
     [songs] // Added songs as a dependency
@@ -117,23 +117,7 @@ const Navbar = () => {
         <span className="text-red-500 text-3xl font-bold">RhythmNest</span>
       </div>
 
-      <div className="flex gap-2 items-center w-1/2">
-        <div
-          className={`${location.pathname !== "/search" ? "opacity-0" : ""
-            } w-full text-left py-4 relative`}
-        >
-          <input
-            type="text"
-            placeholder="Search"
-            autoComplete="off"
-            value={query}
-            onChange={filterSongs}
-            className="block w-full rounded-full pl-12 border-0 text-gray-300 shadow-sm ring ring-transparent placeholder:text-gray-400 focus:ring-3 focus:ring-inset focus:ring-white outline-none p-3 hover:ring-white/20 bg-[#1a1919]"
-          />
-          <FaSearch className="absolute left-4 top-8 text-red-500" />
-          
-        </div>
-      </div>
+      
 
       <div className="flex items-center w-1/3 justify-end">
         {!isLoggedIn ? (
