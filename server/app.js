@@ -8,16 +8,13 @@ const connectDB = require("./db");
 const songRoutes = require("./routes/songRoutes")
 const cookieParser = require("cookie-parser")
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 app.use(cookieParser())
-// Connect to MongoDB
 connectDB();
 
-// Middleware
 app.use(cors(
   {
     origin: "http://localhost:5173",
@@ -29,11 +26,8 @@ app.use(cors(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-// Static folder for uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const folder = file.mimetype.startsWith("image/") ? "artistPhotos" : "songs";
@@ -44,19 +38,13 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-
-// Profile Route
 app.get("/profile", (req, res) => {
   res.status(200).json({ success: true, message: "Profile fetched successfully" });
 });
 
-// Routes
 app.use("/api/user", require("./routes/user"));
 app.use("/api/playlist", require("./routes/playlist"));
 app.use("/api/songs", songRoutes);
-// Pass upload middleware
-
-// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running at: http://localhost:${PORT}`);
 });

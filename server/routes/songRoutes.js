@@ -27,7 +27,6 @@ router.post(
     async (req, res) => {
         console.log("hello");
         try {
-            // Check if files are uploaded
             if (!req.files || !req.files["songFile"] || !req.files["artistPhoto"]) {
                 return res.status(400).json({
                     success: false,
@@ -35,7 +34,6 @@ router.post(
                 });
             }
 
-            // Validate input fields
             const { title, artist } = req.body;
             if (!title || !artist) {
                 return res.status(400).json({
@@ -44,11 +42,9 @@ router.post(
                 });
             }
 
-            // File paths
             const songUrl = `/uploads/songs/${req.files["songFile"][0].filename}`;
             const artistPhotoUrl = `/uploads/artistPhotos/${req.files["artistPhoto"][0].filename}`;
 
-            // Create a new song entry
             const newSong = new Song({ title, artist, songUrl, artistPhotoUrl });
             await newSong.save();
 
@@ -58,7 +54,7 @@ router.post(
                 song: newSong,
             });
         } catch (error) {
-            console.error("❌ Error adding song:", error);
+            console.error(" Error adding song:", error);
             res.status(500).json({
                 success: false,
                 message: "Internal Server Error",
@@ -76,8 +72,8 @@ router.get("/", async (req, res) => {
         if (search) {
             query = {
                 $or: [
-                    { title: { $regex: search, $options: "i" } }, // Case-insensitive title search
-                    { artist: { $regex: search, $options: "i" } }, // Case-insensitive artist search
+                    { title: { $regex: search, $options: "i" } }, 
+                    { artist: { $regex: search, $options: "i" } }, 
                 ],
             };
         }
@@ -85,7 +81,7 @@ router.get("/", async (req, res) => {
         const songs = await Song.find(query);
         res.status(200).json({ success: true, songs });
     } catch (error) {
-        console.error("❌ Error fetching songs:", error);
+        console.error(" Error fetching songs:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error.",
@@ -98,7 +94,7 @@ router.post("/playSong", verifyToken, isAuthenticated, async (req, res) => {
     try {
         res.status(200).json({ success: true, message: "Song is playing" });
     } catch (error) {
-        console.error("❌ Error playing song:", error);
+        console.error(" Error playing song:", error);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",

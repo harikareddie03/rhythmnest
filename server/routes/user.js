@@ -6,8 +6,11 @@ const jsonWeb = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const verifyToken = require("../middlewares/authMiddleware");
-
+const isAuthenticated = require("../middlewares/auth");
+const connectDB = require("../db"); 
+const { ObjectId } = require("mongodb");
 router.post("/login", async (req, res) => {
+  const Song = require("../Models/Song"); 
 
   const { username, password } = req.body;
 
@@ -94,7 +97,7 @@ router.get("/users", async (req, res) => {
 
 router.get("/profile", verifyToken, async (req, res) => {
   try {
-    // Use the user ID from the token (added by the middleware)
+    
     const user = await User.findById(req.user.id);
     console.log("getprofile", user);
 
@@ -102,7 +105,6 @@ router.get("/profile", verifyToken, async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // Respond with user details
     return res.status(200).json({
       success: true,
       user: {
@@ -111,7 +113,7 @@ router.get("/profile", verifyToken, async (req, res) => {
         DOB: user.DOB,
         gender: user.gender,
       },
-      playlists: user.playlists || [], // Assuming playlists are part of the user document
+      playlists: user.playlists || [], 
     });
   } catch (error) {
     console.error("Error fetching user profile:", error);
@@ -123,12 +125,10 @@ router.get("/profile", verifyToken, async (req, res) => {
 router.put("/update", verifyToken, async (req, res) => {
   try {
     const { username, email, phone, gender } = req.body;
-
-    // Update user in the database
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { username, email, phone, gender },
-      { new: true } // Return the updated document
+      { new: true } 
     );
 
     if (!updatedUser) {
@@ -146,38 +146,99 @@ router.put("/update", verifyToken, async (req, res) => {
   }
 });
 
-// router.post("/like", async (req, res) => {
-//   const { userId, songId } = req.body;
 
-//   try {
-//       const user = await db.collection("users").findOne({ _id: ObjectId(userId) });
 
-//       if (!user) {
-//           return res.status(404).json({ success: false, message: "User not found" });
-//       }
 
-//       const isLiked = user.likedSongs && user.likedSongs.includes(ObjectId(songId));
+router.post("/like", async (req, res) => {
+  const { userId, songId } = req.body;
 
-//       if (isLiked) {
-//           // Unlike the song
-//           await db.collection("users").updateOne(
-//               { _id: ObjectId(userId) },
-//               { $pull: { likedSongs: ObjectId(songId) } }
-//           );
-//           return res.json({ success: true, isLiked: false });
-//       } else {
-//           // Like the song
-//           await db.collection("users").updateOne(
-//               { _id: ObjectId(userId) },
-//               { $addToSet: { likedSongs: ObjectId(songId) } }
-//           );
-//           return res.json({ success: true, isLiked: true });
-//       }
-//   } catch (error) {
-//       console.error("❌ Error updating liked songs:", error);
-//       res.status(500).json({ success: false, message: "Internal server error" });
-//   }
-// });
+  try {
+    const db = await connectDB();
+    if (!db) {
+      console.error(" Database connection failed");
+      return res.status(500).json({ success: false, message: "Database connection failed" });
+    }
+
+    if (!ObjectId.isValid(userId) || !ObjectId.isValid(songId)) {
+      console.error("Invalid ID format:", { userId, songId });
+      return res.status(400).json({ success: false, message: "Invalid userId or songId" });
+    }
+
+    const user = await db.collection("users").findOne({ _id: new ObjectId(userId) });
+    if (!user) {
+      console.error(" User not found:", userId);
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const isLiked = user.likedSongs && user.likedSongs.some(id => id.toString() === songId);
+
+    if (isLiked) {
+      await db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $pull: { likedSongs: songId } }
+      );
+      return res.json({ success: true, isLiked: false });
+    } else {
+      await db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $addToSet: { likedSongs: songId } }
+      );
+      return res.json({ success: true, isLiked: true });
+    }
+  } catch (error) {
+    console.error(" Server Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+module.exports = router;
+
+router.get("/like",isAuthenticated, async (req, res) => {
+  try {
+    console.log("🔍 Fetching liked songs for user:", req.user); 
+
+    if (!req.user?.id) {
+      return res.status(401).json({ success: false, message: "User not authenticated" });
+    }
+
+    const user = await User.findById(req.user.id).populate("likedSongs");
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, playlist: { title: "Liked Songs", songs: user.likedSongs } });
+
+  } catch (error) {
+    console.error(" Error fetching liked songs:", error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+});
+router.get("/like/:userId", verifyToken, async (req, res) => {
+  const { userId } = req.params;
+  console.log("🔍 Fetching liked songs for user:", userId);
+
+  try {
+      if (!ObjectId.isValid(userId)) {
+          console.error(" Invalid user ID format:", userId);
+          return res.status(400).json({ success: false, message: "Invalid user ID" });
+      }
+
+      const user = await User.findById(userId).populate("likedSongs");
+
+      if (!user) {
+          console.error(" User not found:", userId);
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      console.log(" Liked songs fetched:", user.likedSongs);
+      res.json({ success: true, likedSongs: user.likedSongs });
+
+  } catch (error) {
+      console.error(" Server Error:", error);
+      res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+  }
+});
 
 
 module.exports = router;
