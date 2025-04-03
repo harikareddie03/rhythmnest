@@ -7,8 +7,6 @@ const Profile = () => {
     const [userDetails, setUserDetails] = useState(null);
     const navigate = useNavigate();
 
-
-    // Fetch user details on component mount
     useEffect(() => {
         const fetchUserDetails = async () => {
             const token = sessionStorage.getItem("token");
@@ -51,7 +49,6 @@ const Profile = () => {
         fetchUserDetails();
     }, [navigate]);
 
-    // Update the state as user types in fields
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUserDetails((prevDetails) => ({
@@ -60,7 +57,6 @@ const Profile = () => {
         }));
     };
 
-    // Save changes and update the backend
     const handleSaveChanges = async () => {
         const token = sessionStorage.getItem("token");
 
@@ -86,14 +82,12 @@ const Profile = () => {
         }
     };
 
-    // Logout function
     const handleLogout = () => {
         localStorage.removeItem("token");
         toast.success("Logged out successfully!");
         navigate("/login");
     };
     console.log("det-", userDetails);
-    // Render loading state if data hasn't been fetched yet
     if (!userDetails) {
         return (
             <div className="loading">
@@ -102,10 +96,8 @@ const Profile = () => {
         );
     }
 
-    // JSX rendering the profile page
     return (
         <div className="profile-page bg-gray-100 py-8">
-            {/* Profile Header */}
             <div className="profile-header bg-red-500 text-center py-8 w-full">
                 <div className="profile-avatar mx-auto bg-white rounded-full w-24 h-24 flex items-center justify-center">
                     <span className="text-gray-500 text-4xl">👤</span>
@@ -114,7 +106,6 @@ const Profile = () => {
                 <p className="text-sm">{userDetails.email}</p>
             </div>
 
-            {/* Profile Form */}
             <div className="profile-form bg-white shadow-md rounded-md w-11/12 md:w-2/3 lg:w-1/2 mx-auto mt-6 p-6">
                 <div className="form-group mb-4">
                     <label className="block text-sm font-semibold mb-2" htmlFor="username">
@@ -139,7 +130,6 @@ const Profile = () => {
                         type="email"
                         name="email"
                         value={userDetails.email}
-                        // onChange={handleInputChange}
                         className="w-full border text-black border-gray-300 p-2 rounded-md"
                     />
                 </div>
@@ -188,7 +178,6 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Save Changes Button */}
                 <div className="text-center mt-6">
                     <button
                         onClick={handleSaveChanges}
@@ -199,7 +188,6 @@ const Profile = () => {
                 </div>
             </div>
 
-            {/* Logout Button */}
             <div className="text-center mt-6">
                 <button
                     onClick={handleLogout}

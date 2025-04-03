@@ -38,7 +38,6 @@ const Signup = () => {
 
     const { email, day, username, year, month, password, gender } = userDetails;
 
-    // Validation
     if (!email || !day || !username || !year || !month || !password || !gender) {
       toast.error("Please fill all the fields!");
       return;
@@ -50,7 +49,7 @@ const Signup = () => {
       return;
     }
 
-    const DOB = `${monthIndex + 1}-${day}-${year}`; // Months start from 1
+    const DOB = `${monthIndex + 1}-${day}-${year}`; 
 
     const userData = {
       email,
@@ -131,7 +130,6 @@ const Signup = () => {
           <span className="or__">or</span>
           <p className="my-4 font-bold">Sign up with your email address</p>
           <form onSubmit={registerUser} className="text-center mx-auto w-3/4">
-            {/* Email */}
             <div className="w-4/5 mx-auto text-left py-4">
               <label htmlFor="email" className="font-semibold mb-2 text-sm inline-block">
                 What&apos;s your email?
@@ -147,8 +145,6 @@ const Signup = () => {
                 className="block w-full rounded-[4px] shadow-sm p-3"
               />
             </div>
-
-            {/* Password */}
             <div className="w-4/5 mx-auto text-left py-4">
               <label htmlFor="password" className="font-semibold mb-2 text-sm inline-block">
                 Create a password
@@ -165,7 +161,6 @@ const Signup = () => {
               />
             </div>
 
-            {/* Username */}
             <div className="w-4/5 mx-auto text-left py-4">
               <label htmlFor="username" className="font-semibold mb-2 text-sm inline-block">
                 What should we call you?
@@ -183,7 +178,6 @@ const Signup = () => {
               <small>It will appear on your profile</small>
             </div>
 
-            {/* Date of Birth */}
             <div className="w-4/5 mx-auto text-left py-4">
               <label htmlFor="dob" className="font-semibold mb-2 text-sm inline-block">
                 What&apos;s your date of birth?
@@ -221,7 +215,6 @@ const Signup = () => {
               </div>
             </div>
 
-            {/* Gender */}
             <div className="flex gap-4 my-4">
               <label>
                 <input
@@ -255,7 +248,6 @@ const Signup = () => {
               </label>
             </div>
 
-            {/* Terms */}
             <div className="w-4/5 mx-auto text-left py-4">
               <label htmlFor="terms" className="inline-flex items-center">
                 <input type="checkbox" id="terms" name="terms" className="form-checkbox" />
@@ -263,7 +255,6 @@ const Signup = () => {
               </label>
             </div>
 
-            {/* Submit Button */}
             <div className="w-4/5 mx-auto text-left py-4">
               <button
                 type="submit"

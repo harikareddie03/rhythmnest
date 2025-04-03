@@ -12,7 +12,7 @@ const CreatePlaylist = () => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [playlistName, setPlaylistName] = useState("");
   const [playingSong, setPlayingSong] = useState(null);
-  const audioRef = useRef(null); // Reference for controlling the audio
+  const audioRef = useRef(null); 
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const CreatePlaylist = () => {
       const res = await fetch(`http://localhost:8080/api/songs?search=${searchTerm}`);
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
-      console.log("🎵 Fetched Songs fetch:", data.songs);
+      console.log("Fetched Songs fetch:", data.songs);
       setAllSongs(data.songs || []);
     } catch (error) {
       console.error("Failed to fetch songs:", error);
@@ -38,26 +38,18 @@ const CreatePlaylist = () => {
     fetchSongs();
   }, [searchTerm]);
 
-  // const handleSelectSong = (song) => {
-   
-  //   setSelectedSongs((prev) =>
-  //     prev.some((s) => s._id === song._id)
-  //       ? prev.filter((s) => s._id !== song._id)
-  //       : [...prev, song]
-  //   );
-  // };
   const handleSelectSong = (song) => {
     setSelectedSongs((prevSelected) => {
       const isAlreadySelected = prevSelected.some((s) => s._id === song._id);
   
-      console.log("🟢 Clicked Song:", song);
-      console.log("📌 Previously Selected:", prevSelected);
+      console.log(" Clicked Song:", song);
+      console.log(" Previously Selected:", prevSelected);
   
       if (isAlreadySelected) {
-        console.log("❌ Removing Song:", song.title);
+        console.log("Removing Song:", song.title);
         return prevSelected.filter((s) => s._id !== song._id);
       } else {
-        console.log("✅ Adding Song:", song.title);
+        console.log("Adding Song:", song.title);
         return [...prevSelected, song];
       }
     });
@@ -96,7 +88,7 @@ const CreatePlaylist = () => {
             song_title: song.title || "Unknown Title",
             song_artist: song.artist || "Unknown Artist",
             song_thumbnail: song.thumbnail || "default.jpg",
-          })), // Ensure required fields exist
+          })), 
         };
         console.log("palload",payload);
         try {
@@ -108,12 +100,12 @@ const CreatePlaylist = () => {
     
           if (!res.ok) throw new Error("Failed to save playlist");
     
-          console.log("✅ Playlist saved successfully!");
+          console.log(" Playlist saved successfully!");
           toast.success("Playlist saved successfully!");
           setPlaylistName("");
           setSelectedSongs([]);
         } catch (error) {
-          console.error("❌ Error saving playlist:", error.message);
+          console.error(" Error saving playlist:", error.message);
         }
       };
   return (
@@ -165,8 +157,7 @@ const CreatePlaylist = () => {
           <p className="text-gray-500">No songs found.</p>
         )}
       </div>
-
-      {/* Single Global Audio Player */}
+      
       <audio ref={audioRef} controls autoPlay hidden />
       
       <button

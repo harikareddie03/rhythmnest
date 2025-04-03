@@ -31,7 +31,6 @@ const Card = ({ song, idx }) => {
       setSongIdx(idx);
       dispatch(playSong(song));
     }
-    // console.log(`Card ${song?._id}: isPlaying=${isPlaying}, masterSong.id=${masterSong?.id}, isCurrentSongPlaying=${isCurrentSongPlaying}`);
   };
   
   return (

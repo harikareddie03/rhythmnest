@@ -10,9 +10,9 @@ export const AppProvider = ({ children }) => {
   const [duration, setDuration] = useState("00:00");
   const [progress, setProgress] = useState(0);
   const [songIdx, setSongIdx] = useState(0);
-  const [allSongs, setAllSongs] = useState([]);  // Store all songs
-  const [filteredSongs, setFilteredSongs] = useState([]); // Store filtered songs
-  const [searchTerm, setSearchTerm] = useState(""); // Store search input
+  const [allSongs, setAllSongs] = useState([]); 
+  const [filteredSongs, setFilteredSongs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); 
   const dispatch = useDispatch();
 
   const resetEverything = () => {
@@ -41,21 +41,19 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // 🎵 Fetch all songs once when the app loads
   useEffect(() => {
-    fetch("http://localhost:8080/api/songs") // Replace with your actual API endpoint
+    fetch("http://localhost:8080/api/songs") 
       .then((res) => res.json())
       .then((data) => {
         setAllSongs(data.songs || []);
         setFilteredSongs(data.songs || []);
       })
-      .catch((err) => console.error("❌ Error fetching songs:", err));
+      .catch((err) => console.error(" Error fetching songs:", err));
   }, []);
 
-  // 🔍 Filter songs based on search term
   useEffect(() => {
     if (searchTerm.trim() === "") {
-      setFilteredSongs(allSongs); // Reset to all songs if no search term
+      setFilteredSongs(allSongs); 
     } else {
       setFilteredSongs(
         allSongs.filter(song =>
@@ -80,7 +78,7 @@ export const AppProvider = ({ children }) => {
         setSongIdx,
         getUser,
         filteredSongs,
-        setSearchTerm, // Add this function so the search bar can use it
+        setSearchTerm, 
       }}
     >
       {children}

@@ -2,14 +2,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth for login
+import { useAuth } from "../../context/AuthContext";
 import "./login.css";
 const Login = () => {
-  const { login } = useAuth(); // Get login function from AuthContext
+  const { login } = useAuth(); 
   const [userDetails, setUserDetails] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
-  // Handle form submission
   const loginUser = async (e) => {
     e.preventDefault();
     const { username, password } = userDetails;
@@ -26,8 +25,8 @@ const Login = () => {
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        login(data.user, data.token); // Store user and token
-        navigate("/"); // Redirect to homepage
+        login(data.user, data.token); 
+        navigate("/");
       } else {
         toast.error(data.message);
       }
@@ -35,15 +34,12 @@ const Login = () => {
       toast.error("An error occurred. Please try again.");
     }
   };
-
-  // Handle input changes
   const onChange = (e) => {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      {/* Your existing JSX for the login form */}
       <header className="flex justify-center items-center py-4 px-4 bg-white">
         <center>
           <div className="flex items-center">

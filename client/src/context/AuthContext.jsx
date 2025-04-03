@@ -6,12 +6,10 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         const storedUser = sessionStorage.getItem("user");
-        // console.log("AuthProvider: Initial user from sessionStorage =", storedUser);
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
     const isLoggedIn = !!user;
-    // console.log("AuthProvider: isLoggedIn =", isLoggedIn);
 
     const login = (userData, token) => {
         console.log("AuthProvider: Logging in with user =", userData);

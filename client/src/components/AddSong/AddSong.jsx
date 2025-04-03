@@ -27,7 +27,7 @@ const AddSong = () => {
             setSongDetails((prev) => ({
                 ...prev,
                 [name]: file,
-                ...(name === "songFile" ? { audioPreview: URL.createObjectURL(file) } : {}), // Add preview if it's a song
+                ...(name === "songFile" ? { audioPreview: URL.createObjectURL(file) } : {}), 
             }));
         }
     };
@@ -46,7 +46,7 @@ const AddSong = () => {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "Authorization": `Bearer ${token}`, // Ensure Bearer format is used
+                    "Authorization": `Bearer ${token}`, 
                 },
                 credentials: "include",
             });
@@ -97,7 +97,6 @@ const AddSong = () => {
                     required
                 />
 
-                {/* Choose Artist Photo */}
                 <label className="block text-gray-700 font-semibold">Choose Artist Photo</label>
                 <div className="flex items-center space-x-4">
                     <input
@@ -120,7 +119,6 @@ const AddSong = () => {
                     )}
                 </div>
 
-                {/* Choose Song */}
                 <label className="block text-gray-700 font-semibold">Choose Song</label>
                 <div className="flex items-center space-x-4">
                     <input
@@ -143,7 +141,6 @@ const AddSong = () => {
                     )}
                 </div>
 
-                {/* Audio Preview */}
                 {songDetails.audioPreview && (
                     <div className="mt-4">
                         <p className="font-bold">Preview:</p>

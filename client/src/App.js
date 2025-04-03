@@ -1,5 +1,5 @@
 import React from "react";
-import ThemeToggle from "./components/ThemeToggle"; // Adjust the path
+import ThemeToggle from "./components/ThemeToggle";
 import './styles.css';
 
 

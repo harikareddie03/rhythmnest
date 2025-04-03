@@ -10,52 +10,6 @@ import Navbar from "../Navbar";
 import { useGlobalContext } from "../../states/Contet";
 import Footer from "../Footer/Footer";
 import { useEffect, useState } from "react";
-
-// export const songs = [
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "ggg",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/jamurathiri.mp3"),
-//     img: "/assets/Arijit-1.jpg",
-//   },
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "Ae Dil Hai Mushkil",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
-//     img: "/assets/Arijit-2.jpg",
-//   },
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "Mirchi Awards",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
-//     img: "/assets/Arijit-3.jpg",
-//   },
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "Judaiyaan",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
-//     img: "/assets/Arijit-4.jpg",
-//   },
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "Heeriye",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
-//     img: "/assets/Arijit-1.jpg",
-//   },
-//   {
-//     id: Math.random() * Date.now(),
-//     title: "Tu hi Hai Aashiqui",
-//     artist: "Arijit Singh",
-//     mp3: new Audio("/assets/mp3/Tum_Hi_Ho.mp3"),
-//     img: "/assets/Arijit-2.jpg",
-//   },
-// ];
-
 const Home = () => {
   const { getUser } = useGlobalContext();
   const [songs, setSongs] = useState([]);
@@ -64,7 +18,6 @@ const Home = () => {
     try {
       const res = await fetch("http://localhost:8080/api/songs"); 
       const data = await res.json();
-      // console.log("Updated song list:", data.songs);
 
       if (data.success) {
         setSongs(data.songs);
@@ -76,7 +29,6 @@ const Home = () => {
     }
   };
 
-  // Fetch songs and user data on component mount
   useEffect(() => {
     getUser();
     fetchUpdatedSongs();
@@ -94,9 +46,6 @@ const Home = () => {
           <span className="text-red-500">Show All</span>
         </div>
         <div className="grid gap-6 grid-cols-5">
-          {/* {songs.map((song, i) => {
-            return <Card key={song.id} idx={i} song={song} />;
-          })} */}
           {songs.map((song, idx) => (
   <Card key={song?._id || `song-${idx}`} song={song} idx={idx} />
 ))}
@@ -109,10 +58,6 @@ const Home = () => {
           <span className="text-red-500">Show All</span>
         </div>
         <div className="grid gap-6 grid-cols-5">
-          {/* {songs.map((song, i) => {
-            return <Card key={song.id} idx={i} song={song} />;
-          })}
-           */}
            {songs.map((song, idx) => (
   <Card key={song?._id || `song-${idx}`} song={song} idx={idx} />
 ))}

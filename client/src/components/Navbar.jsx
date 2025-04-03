@@ -7,13 +7,11 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { songs } from "./Home/Home";
 import { useGlobalContext } from "../states/Contet";
 import { logOutUser } from "../states/Actors/UserActor";
 import debounce from "lodash.debounce";
 
-// Import your logo image
-import logo from "../assets/rythmnest1.jpeg"; // Adjust the path as needed
+import logo from "../assets/rythmnest1.jpeg"; 
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
@@ -22,7 +20,6 @@ const Navbar = () => {
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [songs, setSongs] = useState([]);
-  //const { setFilteredSongs } = useGlobalContext();
   const [filteredSongs, setFilteredSongs] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,16 +27,16 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     () => JSON.parse(localStorage.getItem("isDarkMode")) || false
   );
-  const { user } = useAuth();  // Use user from AuthContext
-  const isLoggedIn = !!user;   // Convert user object to boolean
+  const { user } = useAuth();  
+  const isLoggedIn = !!user; 
 
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/songs"); // Replace with your actual API endpoint
+        const response = await fetch("http://localhost:8080/api/songs");
         const data = await response.json();
         console.log("Fetched songs1:", data.songs);
-        setSongs(data.songs || []); // Ensure API response has `songs` array
+        setSongs(data.songs || []); 
       } catch (error) {
         console.error("Error fetching songs:", error.message);
       }
@@ -53,8 +50,8 @@ const Navbar = () => {
   }, [songs]);
   
   const debouncedFilterSongs = useCallback(
-    debounce((value, songsList = []) => { // Default to an empty array
-      if (!Array.isArray(songsList) || songsList.length === 0) return; // Avoid filtering if songsList is not an array or is empty
+    debounce((value, songsList = []) => { 
+      if (!Array.isArray(songsList) || songsList.length === 0) return; 
   
       const filtered = songsList.filter((song) =>
         song.title.toLowerCase().includes(value.toLowerCase()) ||
@@ -64,7 +61,7 @@ const Navbar = () => {
       console.log("Filtered Songs1:", filtered);
       setFilteredSongs(filtered);
     }, 300),
-    [songs] // Added songs as a dependency
+    [songs] 
   );
   
   
@@ -75,7 +72,7 @@ const Navbar = () => {
   const filterSongs = (e) => {
     const value = e.target.value;
     setQuery(value);
-    debouncedFilterSongs(value, songs); // Pass latest songs array
+    debouncedFilterSongs(value, songs); 
   };
   
 
@@ -95,10 +92,10 @@ const Navbar = () => {
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add("dark-mode");
-      document.documentElement.classList.add("dark"); // <-- Add this
+      document.documentElement.classList.add("dark"); 
     } else {
       document.body.classList.remove("dark-mode");
-      document.documentElement.classList.remove("dark"); // <-- Remove this
+      document.documentElement.classList.remove("dark"); 
     }
     localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode));
   }, [isDarkMode]);
@@ -109,7 +106,6 @@ const Navbar = () => {
     ${isDarkMode ? "bg-black text-white" : "bg-white text-black"} transition-all duration-300`}
     >
 
-      {/* Logo and Name Section */}
       <div className="flex gap-2 items-center"></div>
       
       <div className="flex items-center w-1/3">

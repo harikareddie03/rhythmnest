@@ -13,7 +13,7 @@ const initialState = {
 export const songReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SEARCH_SONGS_REQUEST":
-    return { ...state, loading: true };  // Optional: Show loading indicator
+    return { ...state, loading: true };  
 
 case SEARCH_SONGS:
     return { ...state, songsList: action.payload, loading: false };
@@ -22,7 +22,7 @@ case "SEARCH_SONGS_ERROR":
     return { ...state, loading: false, error: action.payload };
 
         case PLAY_SONG_REQUEST:
-            // console.log("✅ Reducer - PLAY_SONG_REQUEST:", action.payload); 
+           
             return { 
                 ...state, 
                 masterSong: { ...action.payload, id: action.payload._id, isPlaying: true }, 
@@ -34,7 +34,7 @@ case "SEARCH_SONGS_ERROR":
                 ...state, 
                 masterSong: state.masterSong 
                     ? { ...state.masterSong, isPlaying: false } 
-                    : null, // 🛠 Ensure masterSong is not null
+                    : null,
                 isPlaying: false
             };
 
@@ -44,7 +44,7 @@ case "SEARCH_SONGS_ERROR":
                 isPlaying: true,
                 masterSong: state.masterSong 
                     ? { ...state.masterSong, isPlaying: true } 
-                    : null  // 🛠 Keep masterSong in sync
+                    : null
             };
 
         case PAUSE_MASTER:
@@ -53,7 +53,7 @@ case "SEARCH_SONGS_ERROR":
                 isPlaying: false,
                 masterSong: state.masterSong 
                     ? { ...state.masterSong, isPlaying: false } 
-                    : null  // 🛠 Ensure masterSong is updated
+                    : null  
             };
 
         default:
